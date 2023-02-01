@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: victor
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: bibpau
+    container_name: bibpau-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+      - node_modules:/var/www/node_modules
+    networks:
+      - bibpau
+
+  db:
+    image: mariadb:10.8
+    container_name: bibpau-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bibpau
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: bibpau
+      MYSQL_USER: bibpau
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    #volumes:
+      #- ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - bibpau
+  nginx:
+    image: nginx:1.22-alpine
+    container_name: bibpau-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./src:/var/www/
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - bibpau
+
+networks:
+  bibpau:
+    driver: bridge
+
+volumes:
+        node_modules:
