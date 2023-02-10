@@ -14,7 +14,7 @@ class LivroController extends Controller
      */
     public function index()
     {
-        //
+        return view('livro.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class LivroController extends Controller
      */
     public function create()
     {
-        //
+        return view('livro.novo');
     }
 
     /**
@@ -35,7 +35,7 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('livros');
     }
 
     /**
@@ -46,7 +46,7 @@ class LivroController extends Controller
      */
     public function show(Livro $livro)
     {
-        //
+        return view('livro.exibir');
     }
 
     /**
@@ -57,7 +57,7 @@ class LivroController extends Controller
      */
     public function edit(Livro $livro)
     {
-        //
+        return view('livro.editar');
     }
 
     /**
@@ -69,7 +69,7 @@ class LivroController extends Controller
      */
     public function update(Request $request, Livro $livro)
     {
-        //
+        return redirect()->route('livros');
     }
 
     /**
@@ -80,6 +80,6 @@ class LivroController extends Controller
      */
     public function destroy(Livro $livro)
     {
-        //
+        return redirect()->route('livros');
     }
 }

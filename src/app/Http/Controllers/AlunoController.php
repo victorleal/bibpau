@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Aluno;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\AlunoRequest;
+
 class AlunoController extends Controller
 {
     /**
@@ -14,7 +16,9 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        return view('todo');
+        $alunos = Aluno::all();
+
+        return view('aluno.index', compact('alunos'));
     }
 
     /**
@@ -24,7 +28,7 @@ class AlunoController extends Controller
      */
     public function create()
     {
-        return view('todo');
+        return view('aluno.novo');
     }
 
     /**
@@ -33,9 +37,15 @@ class AlunoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AlunoRequest $request)
     {
-        return view('todo');
+        $validated = $request->validated();
+
+        $aluno = Aluno::create($validated);
+
+        $request->session()->flash('sucesso', 'Aluno cadastrado com sucesso!');
+
+        return redirect()->route('alunos.index');
     }
 
     /**
@@ -46,7 +56,7 @@ class AlunoController extends Controller
      */
     public function show(Aluno $aluno)
     {
-        return view('todo');
+        return view('aluno.exibir', compact('aluno'));
     }
 
     /**
@@ -57,7 +67,7 @@ class AlunoController extends Controller
      */
     public function edit(Aluno $aluno)
     {
-        return view('todo');
+        return view('aluno.editar', compact('aluno'));
     }
 
     /**
@@ -67,9 +77,15 @@ class AlunoController extends Controller
      * @param  \App\Models\Aluno  $aluno
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Aluno $aluno)
+    public function update(AlunoRequest $request, Aluno $aluno)
     {
-        return view('todo');
+        $validated = $request->validated();
+
+        $aluno->update($validated);
+
+        $request->session()->flash('sucesso', 'Aluno atualizado com sucesso!');
+
+        return redirect()->route('alunos.index');
     }
 
     /**
@@ -80,6 +96,10 @@ class AlunoController extends Controller
      */
     public function destroy(Aluno $aluno)
     {
-        return view('todo');
+        $aluno->delete();
+
+        $request->session()->flash('sucesso', 'Aluno excluído com sucesso!');
+
+        return redirect()->route('alunos.index');
     }
 }

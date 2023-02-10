@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('alunos', function (Blueprint $table) {
             $table->id();
+            $table->string('nome', 255);
+            $table->string('turma', 20);
             $table->timestamps();
         });
     }
