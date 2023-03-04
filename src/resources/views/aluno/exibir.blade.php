@@ -17,7 +17,7 @@
 
     <div class="row mb-3">
         <div class="col-12">
-            <label for="codigo">Turma:</label>
+            <label for="turma">Turma:</label>
             <input type="text" class="form-control" name="turma" id="turma" readonly disabled value="{{ $aluno->turma }}">
         </div>
     </div>

@@ -88,13 +88,20 @@ class AlunoController extends Controller
         return redirect()->route('alunos.index');
     }
 
+    public function formExcluir(Request $request, $id)
+    {
+        $aluno = Aluno::findOrFail($id);
+
+        return view('aluno.form_excluir', compact('aluno'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Aluno  $aluno
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Aluno $aluno)
+    public function destroy(Request $request, Aluno $aluno)
     {
         $aluno->delete();
 
