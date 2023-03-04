@@ -30,12 +30,14 @@ Route::get('/alunos/{id}/excluir', [AlunoController::class, 'formExcluir'])->nam
 Route::delete('/alunos/{id}', [AlunoController::class, 'destroy'])->name('excluir_aluno');*/
 
 Route::get('/alunos/{id}/excluir', [AlunoController::class, 'formExcluir'])->name('form_excluir_aluno');
+Route::get('/livros/{id}/excluir', [LivroController::class, 'formExcluir'])->name('form_excluir_livro');
 Route::resource('alunos', AlunoController::class);
+Route::resource('livros', LivroController::class);
 
-Route::get('/livros', [LivroController::class, 'index'])->name('livros');
+/*Route::get('/livros', [LivroController::class, 'index'])->name('livros');
 Route::get('/livros/novo', [LivroController::class, 'create'])->name('form_novo_livro');
 Route::post('/livros', [LivroController::class, 'store'])->name('salvar_novo_livro');
 Route::get('/livros/{id}', [LivroController::class, 'show'])->name('exibir_livro');
 Route::get('/livros/{id}/editar', [LivroController::class, 'edit'])->name('form_editar_livro');
 Route::patch('/livros/{id}', [LivroController::class, 'update'])->name('atualizar_livro');
-Route::delete('/livros/{id}', [LivroController::class, 'destroy'])->name('excluir_livro');
+Route::delete('/livros/{id}', [LivroController::class, 'destroy'])->name('excluir_livro');*/

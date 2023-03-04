@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Livro;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\LivroRequest;
+
 class LivroController extends Controller
 {
     /**
@@ -14,7 +16,9 @@ class LivroController extends Controller
      */
     public function index()
     {
-        return view('livro.index');
+        $livros = Livro::all();
+
+        return view('livro.index', compact('livros'));
     }
 
     /**
@@ -33,9 +37,15 @@ class LivroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LivroRequest $request)
     {
-        return redirect()->route('livros');
+        $validated = $request->validated();
+
+        $livro = Livro::create($validated);
+
+        $request->session()->flash('sucesso', 'Livro cadastrado com sucesso!');
+
+        return redirect()->route('livros.index');
     }
 
     /**
@@ -46,7 +56,7 @@ class LivroController extends Controller
      */
     public function show(Livro $livro)
     {
-        return view('livro.exibir');
+        return view('livro.exibir', compact('livro'));
     }
 
     /**
@@ -57,7 +67,7 @@ class LivroController extends Controller
      */
     public function edit(Livro $livro)
     {
-        return view('livro.editar');
+        return view('livro.editar', compact('livro'));
     }
 
     /**
@@ -67,9 +77,22 @@ class LivroController extends Controller
      * @param  \App\Models\Livro  $livro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Livro $livro)
+    public function update(LivroRequest $request, Livro $livro)
     {
-        return redirect()->route('livros');
+        $validated = $request->validated();
+
+        $livro->update($validated);
+
+        $request->session()->flash('sucesso', 'Livro atualizado com sucesso!');
+
+        return redirect()->route('livros.index');
+    }
+
+    public function formExcluir(Request $request, $id)
+    {
+        $livro = Livro::findOrFail($id);
+
+        return view('livro.form_excluir', compact('livro'));
     }
 
     /**
@@ -78,8 +101,12 @@ class LivroController extends Controller
      * @param  \App\Models\Livro  $livro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Livro $livro)
+    public function destroy(Request $request, Livro $livro)
     {
-        return redirect()->route('livros');
+        $livro->delete();
+
+        $request->session()->flash('sucesso', 'Livro excluído com sucesso!');
+
+        return redirect()->route('livros.index');
     }
 }

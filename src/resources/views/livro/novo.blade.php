@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form action="{{ route('salvar_novo_livro') }}" method="post" class="mt-3">
+    <form action="{{ route('livros.store') }}" method="post" class="mt-3">
         @csrf
 
         <div class="row mb-3">
@@ -28,7 +28,7 @@
             <div class="col-12">
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-outline-primary btn-block">Cadastrar</button>
-                    <a href="{{ route('livros') }}" role="button" class="btn btn-outline-secondary btn-block">Cancelar</a>
+                    <a href="{{ route('livros.index') }}" role="button" class="btn btn-outline-secondary btn-block">Cancelar</a>
                 </div>
             </div>
         </div>
